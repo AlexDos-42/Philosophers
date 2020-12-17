@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:06:11 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/16 19:06:17 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/17 20:08:44 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int					main(int argc, char **argv);
 int					check_arg(int argc, char **argv, t_base *base);
 int					init_philo(t_base *base);
 int					is_atoi(char *tab);
-char				*ft_name(char *str, int j);
 
 /*
 ** --TREAD--
@@ -86,6 +85,7 @@ void				sleeping(t_philo *philo);
 
 void				aff(t_philo *philo, int i);
 char				*text(int i);
+char				*ft_name(char *str, int j);
 
 /*
 ** --OUTILS--
@@ -101,7 +101,7 @@ void				ft_putchar_fd(char c, int fd);
 ** --EXIT--
 */
 
-int					clean_ph(t_base *base);
+void				clean_ph(t_base *base, int i);
 int					exit_error(t_base *base, int i);
 
 #endif

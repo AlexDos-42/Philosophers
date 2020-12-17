@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 18:49:58 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/16 18:50:40 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/17 20:09:44 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,25 @@ void	aff(t_philo *philo, int i)
 		}
 	}
 	sem_post(philo->base->text);
+}
+
+char	*ft_name(char *str, int j)
+{
+	int			i;
+	char		*tmp;
+
+	i = 0;
+	tmp = malloc(sizeof(char) * 100);
+	while (i < ft_strlen(str))
+	{
+		tmp[i] = str[i];
+		i++;
+	}
+	while (j > 0)
+	{
+		tmp[i++] = j % 10 + '0';
+		j = j / 10;
+	}
+	tmp[i] = 0;
+	return (tmp);
 }

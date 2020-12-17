@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:07:50 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/16 19:08:13 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/17 20:08:31 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,25 @@ void	aff(t_philo *philo, int i)
 	if (i == 5 || i == 6)
 		exit(0);
 	sem_post(philo->base->text);
+}
+
+char	*ft_name(char *str, int j)
+{
+	int				i;
+	char			*tmp;
+
+	i = 0;
+	tmp = malloc(sizeof(char) * 100);
+	while (i < ft_strlen(str))
+	{
+		tmp[i] = str[i];
+		i++;
+	}
+	while (j > 0)
+	{
+		tmp[i++] = j % 10 + '0';
+		j = j / 10;
+	}
+	tmp[i] = 0;
+	return (tmp);
 }

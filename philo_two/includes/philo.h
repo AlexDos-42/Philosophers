@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:00:19 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/16 19:00:26 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/17 20:11:29 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ typedef struct		s_base
 */
 
 int					main(int argc, char **argv);
+int					check_arg(int argc, char **argv, t_base *base);
+int					init_philo(t_base *base);
+int					init_sem(t_philo *philo, int i);
+int					is_atoi(char *tab);
 
 /*
 ** --TREAD--
@@ -78,6 +82,7 @@ void				sleeping(t_philo *philo);
 
 void				aff(t_philo *philo, int i);
 char				*text(int i);
+char				*ft_name(char *str, int j);
 
 /*
 ** --OUTILS--

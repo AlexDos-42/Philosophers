@@ -6,31 +6,26 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:11:20 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/17 16:55:23 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/17 20:08:18 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-char	*ft_name(char *str, int j)
+int		is_atoi(char *tab)
 {
-	int		i;
-	char	*tmp;
+	int			i;
 
 	i = 0;
-	tmp = malloc(sizeof(char) * 100);
-	while (i < ft_strlen(str))
-	{
-		tmp[i] = str[i];
+	while (tab[i] && tab[i] == ' ')
 		i++;
-	}
-	while (j > 0)
-	{
-		tmp[i++] = j % 10 + '0';
-		j = j / 10;
-	}
-	tmp[i] = 0;
-	return (tmp);
+	if (tab[i] == '-' || tab[i] == '+')
+		i++;
+	while (tab[i] && (tab[i] >= '0' && tab[i] <= '9'))
+		i++;
+	if (tab[i] == '\0')
+		return (ft_atoi(tab));
+	return (-1);
 }
 
 int		init_sem(t_philo *philo, int i)
@@ -48,22 +43,6 @@ int		init_sem(t_philo *philo, int i)
 	free(tmp);
 	tmp = NULL;
 	return (0);
-}
-
-int		is_atoi(char *tab)
-{
-	int		i;
-
-	i = 0;
-	while (tab[i] && tab[i] == ' ')
-		i++;
-	if (tab[i] == '-' || tab[i] == '+')
-		i++;
-	while (tab[i] && (tab[i] >= '0' && tab[i] <= '9'))
-		i++;
-	if (tab[i] == '\0')
-		return (ft_atoi(tab));
-	return (-1);
 }
 
 int		init_philo(t_base *base)
@@ -120,6 +99,6 @@ int		main(int argc, char **argv)
 		return (exit_error(&base, i));
 	if ((i = init_process(&base)))
 		return (exit_error(&base, 3));
-	clean_ph(&base);
+	clean_ph(&base, -1);
 	return (0);
 }

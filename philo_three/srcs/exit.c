@@ -6,47 +6,42 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:08:23 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/17 16:33:54 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/17 20:04:37 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int		clean_ph(t_base *base)
+void		clean_ph(t_base *base, int i)
 {
-	int			i;
 	char		*tmp;
 
-	i = 0;
 	tmp = NULL;
-	if (base)
+	if (!base)
+		return ;
+	if (base->nb_eat > 0)
+		kill(base->pid_b, SIGKILL);
+	if (base->philo)
 	{
-		if (base->nb_eat > 0)
-			kill(base->pid_b, SIGKILL);
-		if (base->philo)
+		while (++i < base->nb_ph)
 		{
-			while (i < base->nb_ph)
-			{
-				kill(base->philo[i].pid, SIGKILL);
-				tmp = ft_name("sim", i);
-				sem_unlink(tmp);
-				free(tmp);
-				tmp = ft_name("t_leat", i);
-				sem_unlink(tmp);
-				free(tmp);
-				tmp = NULL;
-				i++;
-			}
-			free(base->philo);
-			base->philo = NULL;
+			kill(base->philo[i].pid, SIGKILL);
+			tmp = ft_name("sim", i);
+			sem_unlink(tmp);
+			free(tmp);
+			tmp = ft_name("t_leat", i);
+			sem_unlink(tmp);
+			free(tmp);
+			tmp = NULL;
 		}
-		sem_unlink("sem_frk");
-		sem_unlink("sem_disp");
+		free(base->philo);
+		base->philo = NULL;
 	}
-	return (1);
+	sem_unlink("sem_frk");
+	sem_unlink("sem_disp");
 }
 
-int		exit_error(t_base *base, int i)
+int			exit_error(t_base *base, int i)
 {
 	if (i == 2)
 	{

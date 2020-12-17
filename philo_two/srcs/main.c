@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 18:50:54 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/17 16:54:49 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/17 20:09:28 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,6 @@ int		is_atoi(char *tab)
 	if (tab[i] == '\0')
 		return (ft_atoi(tab));
 	return (-1);
-}
-
-char	*ft_name(char *str, int j)
-{
-	int			i;
-	char		*tmp;
-
-	i = 0;
-	tmp = malloc(sizeof(char) * 100);
-	while (i < ft_strlen(str))
-	{
-		tmp[i] = str[i];
-		i++;
-	}
-	while (j > 0)
-	{
-		tmp[i++] = j % 10 + '0';
-		j = j / 10;
-	}
-	tmp[i] = 0;
-	return (tmp);
 }
 
 int		init_sem(t_philo *philo, int i)
