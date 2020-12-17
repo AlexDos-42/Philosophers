@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:08:23 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/16 19:09:15 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/17 16:33:54 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ int		exit_error(t_base *base, int i)
 {
 	if (i == 2)
 	{
-		write(1, "Error : Malloc went wrong\n", 26);
+		write(2, "Error : Malloc went wrong\n", 26);
 		clean_ph(base);
 	}
 	else if (i == 3)
 	{
-		write(1, "Error : Semaphore went wrong\n", 26);
+		write(2, "Error : Semaphore went wrong\n", 26);
 		clean_ph(base);
 	}
 	return (i);

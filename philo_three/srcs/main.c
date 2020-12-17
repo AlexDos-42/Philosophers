@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:11:20 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/16 19:14:11 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/17 16:55:23 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,19 @@ int		check_arg(int argc, char **argv, t_base *base)
 {
 	if (argc < 5 || argc > 6)
 	{
-		write(1, "Wrong number of arguments\n", 26);
+		write(2, "Wrong number of arguments\n", 26);
 		return (1);
 	}
 	if ((base->nb_ph = is_atoi(argv[1])) < 2)
-		write(1, "Wrong number of philosopher\n", 28);
-	else if ((base->t_die = is_atoi(argv[2])) < 20)
-		write(1, "Wrong number: time to die\n", 26);
-	else if ((base->t_eat = is_atoi(argv[3])) < 20)
-		write(1, "Wrong number: time to eat\n", 26);
+		write(2, "Wrong number of philosopher\n", 28);
+	else if ((base->t_die = is_atoi(argv[2])) < 60)
+		write(2, "Wrong number: time to die\n", 26);
+	else if ((base->t_eat = is_atoi(argv[3])) < 60)
+		write(2, "Wrong number: time to eat\n", 26);
 	else if ((base->t_sleep = is_atoi(argv[4])) < 20)
-		write(1, "Wrong number: time to sleep\n", 28);
+		write(2, "Wrong number: time to sleep\n", 28);
 	else if (argc == 6 && (base->nb_eat = is_atoi(argv[5])) < 0)
-		write(1, "Wrong number of meals\n", 20);
+		write(2, "Wrong number of meals\n", 20);
 	else
 		return (init_philo(base));
 	return (1);
@@ -121,4 +121,5 @@ int		main(int argc, char **argv)
 	if ((i = init_process(&base)))
 		return (exit_error(&base, 3));
 	clean_ph(&base);
+	return (0);
 }
