@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 18:21:20 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/17 19:21:42 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/20 11:47:34 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,22 @@ void	*start_routine(void *args)
 	while (!philo->base->finish)
 	{
 		ft_frk(philo);
+		if (philo->base->finish)
+			break ;
 		eat(philo);
+		if (philo->base->finish)
+			break ;
 		ft_frk_no(philo);
 		if (philo->base->nb_eat > 0 && check_philo(philo))
-			return (NULL);
+			break ;
+		if (philo->base->finish)
+			break ;
 		sleeping(philo);
 		aff(philo, 4);
 	}
+	pthread_mutex_unlock(&philo->base->fork[philo->frk_l]);
+	pthread_mutex_unlock(&philo->base->fork[philo->frk_r]);
+	pthread_mutex_unlock(&philo->base->text);
 	return (NULL);
 }
 

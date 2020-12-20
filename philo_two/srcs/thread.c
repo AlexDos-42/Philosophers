@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 18:53:36 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/16 18:55:18 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/20 13:21:03 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,22 @@ void	*start_routine(void *args)
 	while (!philo->base->finish)
 	{
 		ft_frk(philo);
+		if (philo->base->finish)
+			break ;
 		eat(philo);
+		if (philo->base->finish)
+			break ;
 		ft_frk_no(philo);
 		if (philo->base->nb_eat > 0 && check_philo(philo))
-			return (NULL);
+			break ;
+		if (philo->base->finish)
+			break ;
 		sleeping(philo);
 		aff(philo, 4);
 	}
+	sem_post(philo->base->frk);
+	sem_post(philo->base->frk);
+	sem_post(philo->base->text);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 18:50:47 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/17 16:33:19 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/20 13:17:50 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		clean_ph(t_base *base)
 		{
 			while (i < base->nb_ph)
 			{
+				sem_close(base->philo[i].t_leat);
 				sem_unlink(base->philo[i].sem);
 				free(base->philo[i].sem);
 				base->philo[i].sem = NULL;
@@ -30,6 +31,8 @@ int		clean_ph(t_base *base)
 			}
 			free(base->philo);
 		}
+		sem_close(base->frk);
+		sem_close(base->text);
 		sem_unlink("frk");
 		sem_unlink("text");
 	}
