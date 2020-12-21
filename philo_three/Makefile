@@ -45,7 +45,7 @@ OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 vpath %.c $(PATHSRCS)
 
 ### Flags ###
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
 all: $(NAME)
 

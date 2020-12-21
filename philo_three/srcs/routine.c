@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:12:56 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/16 19:13:48 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/21 19:49:54 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	ft_frk(t_philo *philo)
 {
 	sem_wait(philo->base->frk);
-	aff(philo, 1);
 	sem_wait(philo->base->frk);
+	aff(philo, 1);
 	aff(philo, 1);
 }
 

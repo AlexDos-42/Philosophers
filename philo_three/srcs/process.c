@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:12:19 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/16 19:15:27 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/21 18:58:21 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ void	*is_he_dead(void *args)
 	t_philo		*philo;
 
 	philo = args;
-	while (philo->ping)
+	while (philo->ping && g_point != -1)
 	{
 		sem_wait(philo->t_leat);
 		if (chronos() - philo->der > philo->base->t_die)
 		{
 			philo->ping = 0;
+			sem_post(philo->t_leat);
 			aff(philo, 5);
 		}
 		sem_post(philo->t_leat);
@@ -65,7 +66,7 @@ int		start_routine(t_philo *philo)
 	if (pthread_create(&thread, NULL, &is_he_dead, (void*)philo))
 		return (1);
 	pthread_detach(thread);
-	while (1)
+	while (g_point != -1)
 	{
 		ft_frk(philo);
 		eat(philo);
@@ -73,6 +74,10 @@ int		start_routine(t_philo *philo)
 		sleeping(philo);
 		aff(philo, 4);
 	}
+	sem_post(philo->base->frk);
+	sem_post(philo->base->frk);
+	sem_post(philo->t_leat);
+	sem_post(philo->sem);
 	return (0);
 }
 

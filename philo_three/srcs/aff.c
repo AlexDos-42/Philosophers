@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:07:50 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/17 20:08:31 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/21 18:56:20 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,25 @@ void	aff(t_philo *philo, int i)
 	char			*tmp;
 
 	sem_wait(philo->base->text);
-	tmp = text(i);
-	ft_putnbr_fd(chronos() - philo->base->time, 1);
-	if (i == 5)
-		write(1, "\e[91m", 5);
-	if (i != 6)
+	if (g_point != -1)
 	{
-		write(1, "\tPhilosopher ", 13);
-		ft_putnbr_fd(philo->nb + 1, 1);
+		tmp = text(i);
+		ft_putnbr_fd(chronos() - philo->base->time, 1);
+		if (i == 5)
+			write(1, "\e[91m", 5);
+		if (i != 6)
+		{
+			write(1, "\tPhilosopher ", 13);
+			ft_putnbr_fd(philo->nb + 1, 1);
+		}
+		write(1, tmp, ft_strlen(tmp));
+		tmp = NULL;
+		if (i == 5 || i == 6)
+		{
+			g_point = -1;
+			exit(-1);
+		}
 	}
-	write(1, tmp, ft_strlen(tmp));
-	tmp = NULL;
-	if (i == 5 || i == 6)
-		exit(0);
 	sem_post(philo->base->text);
 }
 

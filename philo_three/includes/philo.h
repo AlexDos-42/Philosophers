@@ -6,7 +6,7 @@
 /*   By: alesanto <alesanto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 19:06:11 by alesanto          #+#    #+#             */
-/*   Updated: 2020/12/17 20:08:44 by alesanto         ###   ########.fr       */
+/*   Updated: 2020/12/21 19:05:51 by alesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <stdio.h>
+
+int g_point;
+int g_end;
 
 typedef struct		s_philo
 {
@@ -101,7 +105,7 @@ void				ft_putchar_fd(char c, int fd);
 ** --EXIT--
 */
 
-void				clean_ph(t_base *base, int i);
+void				clean_ph(t_base *base, int i, char *tmp);
 int					exit_error(t_base *base, int i);
 
 #endif
