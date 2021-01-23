@@ -27,6 +27,7 @@
 
 int g_point;
 int g_end;
+int g_meal;
 
 typedef struct		s_philo
 {
@@ -51,6 +52,7 @@ typedef struct		s_base
 	int				time;
 	t_philo			*philo;
 	sem_t			*frk;
+	sem_t			*end;
 	sem_t			*text;
 	pid_t			pid_b;
 }					t_base;
@@ -71,7 +73,7 @@ int					is_atoi(char *tab);
 int					init_process(t_base *base);
 int					start_routine(t_philo *philo);
 void				*is_he_dead(void *args);
-void				check_philo(t_base *base);
+void				*check_philo(void *args);
 int					chronos(void);
 
 /*

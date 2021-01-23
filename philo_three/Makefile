@@ -71,7 +71,7 @@ fclean:	clean
 re:	fclean all
 
 titre:
-	@echo "\e[1;93mPhilo_One - 42 project -$(_R)"
-	@echo "\e[1;93m________________________$(_R)"
+	@echo "\e[1;93mPhilo_Three - 42 project -$(_R)"
+	@echo "\e[1;93m__________________________$(_R)"
 
 .PHONY:	all clean fclean re titre

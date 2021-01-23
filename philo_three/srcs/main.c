@@ -32,12 +32,12 @@ int		init_sem(t_philo *philo, int i)
 {
 	char	*tmp;
 
-	tmp = ft_name("t_leat", i);
+	tmp = ft_name("/t_leat", i);
 	sem_unlink(tmp);
 	philo->t_leat = sem_open(tmp, O_CREAT, 0644, 1);
 	free(tmp);
 	tmp = NULL;
-	tmp = ft_name("sem", i);
+	tmp = ft_name("/sem", i);
 	sem_unlink(tmp);
 	philo->sem = sem_open(tmp, O_CREAT, 0644, 1);
 	free(tmp);
@@ -60,10 +60,12 @@ int		init_philo(t_base *base)
 		base->philo[i].base = base;
 		init_sem(&base->philo[i], i);
 	}
-	sem_unlink("sem_frk");
-	sem_unlink("sem_text");
-	base->frk = sem_open("sem_frk", O_CREAT, 0644, base->nb_ph);
-	base->text = sem_open("sem_text", O_CREAT, 0644, 1);
+	sem_unlink("/sem_end");
+	base->end = sem_open("/sem_end", O_CREAT, 0644, 0);
+	sem_unlink("/sem_frk");
+	sem_unlink("/sem_text");
+	base->frk = sem_open("/sem_frk", O_CREAT, 0644, base->nb_ph);
+	base->text = sem_open("/sem_text", O_CREAT, 0644, 1);
 	return (0);
 }
 
