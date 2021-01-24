@@ -12,46 +12,42 @@
 
 #include "../includes/philo.h"
 
-void		clean_ph(t_base *base, int i, char *tmp)
+void		clean_ph(int i)
 {
-	if (!base)
-		return ;
-	if (base->philo)
+	if (g_base.philo)
 	{
-		while (++i < base->nb_ph)
+		while (++i < g_base.nb_ph)
 		{
-			kill(base->philo[i].pid, SIGKILL);
-			tmp = ft_name("/sem", i);
-			sem_close(base->philo[i].sem);
-			sem_unlink(tmp);
-			free(tmp);
-			tmp = ft_name("/t_leat", i);
-			sem_close(base->philo[i].t_leat);
-			sem_unlink(tmp);
-			free(tmp);
+			kill(g_base.philo[i].pid, SIGKILL);
+			sem_post(g_base.sem);
 		}
-		free(base->philo);
-		base->philo = NULL;
+		sem_post(g_base.end);
+		free(g_base.philo);
+		g_base.philo = NULL;
 	}
-	sem_close(base->frk);
-	sem_close(base->text);
-	sem_destroy(base->frk);
-	sem_destroy(base->text);
+	sem_post(g_base.end);
+	sem_unlink("/end");
+	sem_close(g_base.sem);
+	sem_unlink("/sem");
+	sem_close(g_base.frk);
+	sem_close(g_base.text);
+	sem_destroy(g_base.frk);
+	sem_destroy(g_base.text);
 	sem_unlink("/sem_frk");
 	sem_unlink("/sem_text");
 }
 
-int			exit_error(t_base *base, int i)
+int			exit_error(int i)
 {
 	if (i == 2)
 	{
 		write(2, "Error : Malloc went wrong\n", 26);
-		clean_ph(base, -1, NULL);
+		clean_ph(-1);
 	}
 	else if (i == 3)
 	{
 		write(2, "Error : Semaphore went wrong\n", 26);
-		clean_ph(base, -1, NULL);
+		clean_ph(-1);
 	}
 	return (i);
 }

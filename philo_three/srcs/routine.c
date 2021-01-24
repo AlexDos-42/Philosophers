@@ -14,27 +14,24 @@
 
 void	ft_frk(t_philo *philo)
 {
-	sem_wait(philo->base->frk);
-	sem_wait(philo->base->frk);
+	sem_wait(g_base.frk);
+	sem_wait(g_base.frk);
 	aff(philo, 1);
 	aff(philo, 1);
 }
 
-void	ft_frk_no(t_philo *philo)
+void	ft_frk_no(void)
 {
-	sem_post(philo->base->frk);
-	sem_post(philo->base->frk);
+	sem_post(g_base.frk);
+	sem_post(g_base.frk);
 }
 
 void	eat(t_philo *philo)
 {
-	aff(philo, 2);
 	philo->der = chronos();
-	sem_wait(philo->t_leat);
+	aff(philo, 2);
 	usleep(philo->base->t_eat * 1000);
 	philo->tour++;
-	sem_post(philo->t_leat);
-	sem_post(philo->sem);
 }
 
 void	sleeping(t_philo *philo)

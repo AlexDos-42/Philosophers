@@ -31,11 +31,11 @@ void	aff(t_philo *philo, int i)
 {
 	char			*tmp;
 
-	sem_wait(philo->base->text);
+	sem_wait(g_base.text);
 	if (g_point != -1)
 	{
 		tmp = text(i);
-		ft_putnbr_fd(chronos() - philo->base->time, 1);
+		ft_putnbr_fd(chronos() - g_base.time, 1);
 		if (i == 5)
 			write(1, "\e[91m", 5);
 		if (i != 6)
@@ -48,10 +48,10 @@ void	aff(t_philo *philo, int i)
 		if (i == 5 || i == 6)
 		{
 			g_point = -1;
-			exit(-1);
+			return ;
 		}
 	}
-	sem_post(philo->base->text);
+	sem_post(g_base.text);
 }
 
 char	*ft_name(char *str, int j)

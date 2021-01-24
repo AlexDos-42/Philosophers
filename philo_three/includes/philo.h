@@ -26,7 +26,6 @@
 # include <stdio.h>
 
 int g_point;
-int g_end;
 int g_meal;
 
 typedef struct		s_philo
@@ -36,8 +35,6 @@ typedef struct		s_philo
 	int				der;
 	int				ping;
 	char			*tmp;
-	sem_t			*t_leat;
-	sem_t			*sem;
 	pid_t			pid;
 	struct s_base	*base;
 }					t_philo;
@@ -50,27 +47,31 @@ typedef struct		s_base
 	int				t_die;
 	int				nb_eat;
 	int				time;
+	int				stop;
 	t_philo			*philo;
 	sem_t			*frk;
 	sem_t			*end;
+	sem_t			*sem;
 	sem_t			*text;
 	pid_t			pid_b;
 }					t_base;
+
+extern t_base	g_base;
 
 /*
 ** --MAIN--
 */
 
 int					main(int argc, char **argv);
-int					check_arg(int argc, char **argv, t_base *base);
-int					init_philo(t_base *base);
+int					check_arg(int argc, char **argv);
+int					init_philo(void);
 int					is_atoi(char *tab);
 
 /*
 ** --TREAD--
 */
 
-int					init_process(t_base *base);
+int					init_process(void);
 int					start_routine(t_philo *philo);
 void				*is_he_dead(void *args);
 void				*check_philo(void *args);
@@ -81,7 +82,7 @@ int					chronos(void);
 */
 
 void				ft_frk(t_philo *philo);
-void				ft_frk_no(t_philo *philo);
+void				ft_frk_no(void);
 void				eat(t_philo *philo);
 void				sleeping(t_philo *philo);
 
@@ -107,7 +108,7 @@ void				ft_putchar_fd(char c, int fd);
 ** --EXIT--
 */
 
-void				clean_ph(t_base *base, int i, char *tmp);
-int					exit_error(t_base *base, int i);
+void				clean_ph(int i);
+int					exit_error(int i);
 
 #endif

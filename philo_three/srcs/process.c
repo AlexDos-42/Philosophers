@@ -24,17 +24,14 @@ int		chronos(void)
 
 void	*is_he_dead(void *args)
 {
-	t_philo		*philo;
-
-	philo = args;
-	while (philo->ping)
+	(void)args;
+	while (g_base.philo->ping)
 	{
-		if (chronos() - philo->der > philo->base->t_die)
+		if (g_base.stop == 1 && chronos() - g_base.philo->der > g_base.t_die)
 		{
-			philo->ping = 0;
-			aff(philo, 5);
-			sem_wait(philo->base->end);
-			exit(0);
+			g_base.philo->ping = 0;
+			aff(g_base.philo, 5);
+			sem_post(g_base.end);
 		}
 		usleep(100);
 	}
@@ -44,82 +41,80 @@ void	*is_he_dead(void *args)
 int		start_routine(t_philo *philo)
 {
 	pthread_t	thread;
+	int			nb_meal;
 
+	nb_meal = 0;
 	philo->der = chronos();
-	if (pthread_create(&thread, NULL, &is_he_dead, (void*)philo))
+	if (pthread_create(&thread, NULL, &is_he_dead, NULL))
 		return (1);
 	pthread_detach(thread);
 	while (1)
 	{
 		ft_frk(philo);
 		eat(philo);
-		sem_post(philo->sem);
-		ft_frk_no(philo);
+		nb_meal++;
+		if (nb_meal == g_base.nb_eat)
+			sem_post(g_base.sem);
+		ft_frk_no();
 		sleeping(philo);
 		aff(philo, 4);
 	}
-	sem_post(philo->t_leat);
 	return (0);
 }
 
-void	*end(void *base)
+void	*end(void *args)
 {
-
-	sem_wait(((t_base*)base)->end);
-	g_end = 0;
+	(void)args;
+	sem_wait(g_base.end);
+	g_base.stop = 0;
 	return (NULL);
 }
 
-void	*check_philo(void *base)
+void	*check_philo(void *args)
 {
 	int			j;
 
 	j = 0;
+	(void)args;
 	while (1)
 	{
-		sem_wait(((t_base*)base)->philo->sem);
+		sem_wait(g_base.sem);
 		j++;
-		if (j == g_meal * ((t_base*)base)->nb_ph)
+		if (j == g_base.nb_ph)
 			break ;
 	}
-	aff(((t_base*)base)->philo, 6);
-	g_end = 0;
+	if (g_base.stop == 1)
+		aff(g_base.philo, 6);
+	g_base.stop = 0;
 	return (NULL);
 }
 
-int		init_process(t_base *base)
+int		init_process(void)
 {
 	int			i;
 	pthread_t	thread_end;
 	pthread_t	thread_nb;
 
 	i = 0;
-	base->time = chronos();
-	g_end = 1;
-	if (pthread_create(&thread_end, NULL, &end, &base))
+	g_base.time = chronos();
+	g_base.stop = 1;
+	if (pthread_create(&thread_end, NULL, end, NULL))
+		return (1);
+	if (pthread_create(&thread_nb, NULL, check_philo, NULL))
 		return (1);
 	pthread_detach(thread_end);
-	if (pthread_create(&thread_nb, NULL, &check_philo, &base))
-		return (1);
 	pthread_detach(thread_nb);
-	while (i < base->nb_ph)
+	while (i < g_base.nb_ph)
 	{
-		base->philo[i].der = chronos();
-		if (!(base->philo[i].pid = fork()))
-			start_routine(&base->philo[i]);
-		else if (base->philo[i].pid < 0)
+		g_base.philo[i].der = chronos();
+		if (!(g_base.philo[i].pid = fork()))
+			start_routine(&g_base.philo[i]);
+		else if (g_base.philo[i].pid < 0)
 			return (1);
 		usleep(100);
 		i++;
 	}
-	while(g_end == 1)
-	{
+	while(g_base.stop == 1)
 		usleep(100);
-	}
-	i = -1;
-	while(++i < base->nb_ph)
-	{
-		kill(base->philo[i].pid, SIGKILL);
-	}
 	return (0);
 }
