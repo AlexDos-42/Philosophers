@@ -52,26 +52,26 @@ all: $(NAME)
 $(OBJ_DIR)/%.o: $(PATHSRCS)/%.c
 	@mkdir -p $(OBJ_DIR)
 	@gcc $(FLAGS) -I $(HEADERS) -c $< -o $@ 
-	@echo "$(_YELLOW)Compiling :$(_WHITE) $<$(_R)"
+	@printf "$(_YELLOW)Compiling :$(_WHITE) $<$(_R)\n"
 
 $(NAME): titre $(OBJ)
-	@echo "$(_YELLOW)Compilation completed.$(_R)"
+	@printf "$(_YELLOW)Compilation completed.$(_R)\n"
 	@(gcc $(FLAGS) -I $(HEADERS) $(OBJ) -o $(NAME) -lpthread)
-	@(echo "$(_YELLOW)Executable $(NAME) created.$(_R)")
+	@(printf "$(_YELLOW)Executable $(NAME) created.$(_R)\n")
 
 clean:
-	@echo "$(_BLUE)Clean$(_R)"
+	@printf "$(_BLUE)Clean$(_R)\n"
 	@(rm -rf ./srcs/*.o)
 	@(rm -rf $(OBJ_DIR))
 
 fclean:	clean
-	@echo "$(_BLUE)Fclean$(_R)"
+	@printf "$(_BLUE)Fclean$(_R)\n"
 	@(rm -rf $(NAME))
 
 re:	fclean all
 
 titre:
-	@echo "\e[1;93mPhilo_Two - 42 project -$(_R)"
-	@echo "\e[1;93m________________________$(_R)"
+	@printf "\e[1;93mPhilo_Two - 42 project -$(_R)\n"
+	@printf "\e[1;93m________________________$(_R)\n"
 
 .PHONY:	all clean fclean re titre
