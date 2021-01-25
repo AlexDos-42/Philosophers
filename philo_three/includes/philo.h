@@ -75,6 +75,7 @@ int					init_process(void);
 int					start_routine(t_philo *philo);
 void				*is_he_dead(void *args);
 void				*check_philo(void *args);
+void				*end(void *args);
 
 /*
 ** --ROUTINE--
