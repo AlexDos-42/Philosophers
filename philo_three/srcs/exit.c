@@ -25,14 +25,12 @@ void		clean_ph(int i)
 		free(g_base.philo);
 		g_base.philo = NULL;
 	}
-	sem_post(g_base.end);
+	sem_close(g_base.end);
 	sem_unlink("/end");
 	sem_close(g_base.sem);
 	sem_unlink("/sem");
 	sem_close(g_base.frk);
 	sem_close(g_base.text);
-	sem_destroy(g_base.frk);
-	sem_destroy(g_base.text);
 	sem_unlink("/sem_frk");
 	sem_unlink("/sem_text");
 }

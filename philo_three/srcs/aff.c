@@ -74,3 +74,13 @@ char	*ft_name(char *str, int j)
 	tmp[i] = 0;
 	return (tmp);
 }
+
+int		chronos(void)
+{
+	struct timeval	tv;
+	int				i;
+
+	gettimeofday(&tv, NULL);
+	i = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (i);
+}

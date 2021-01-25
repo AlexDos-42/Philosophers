@@ -12,24 +12,16 @@
 
 #include "../includes/philo.h"
 
-int		chronos(void)
-{
-	struct timeval	tv;
-	int				i;
-
-	gettimeofday(&tv, NULL);
-	i = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (i);
-}
-
 void	*is_he_dead(void *args)
 {
-	(void)args;
-	while (g_base.philo->ping)
+	t_philo *philo;
+
+	philo = (t_philo*)args;
+	while (philo->ping)
 	{
-		if (g_base.stop == 1 && chronos() - g_base.philo->der > g_base.t_die)
+		if (g_base.stop == 1 && chronos() - philo->der > g_base.t_die)
 		{
-			g_base.philo->ping = 0;
+			philo->ping = 0;
 			aff(g_base.philo, 5);
 			sem_post(g_base.end);
 		}
@@ -45,7 +37,7 @@ int		start_routine(t_philo *philo)
 
 	nb_meal = 0;
 	philo->der = chronos();
-	if (pthread_create(&thread, NULL, &is_he_dead, NULL))
+	if (pthread_create(&thread, NULL, &is_he_dead, philo))
 		return (1);
 	pthread_detach(thread);
 	while (1)
@@ -95,7 +87,7 @@ int		init_process(void)
 	pthread_t	thread_end;
 	pthread_t	thread_nb;
 
-	i = 0;
+	i = -1;
 	g_base.time = chronos();
 	g_base.stop = 1;
 	if (pthread_create(&thread_end, NULL, end, NULL))
@@ -104,7 +96,7 @@ int		init_process(void)
 		return (1);
 	pthread_detach(thread_end);
 	pthread_detach(thread_nb);
-	while (i < g_base.nb_ph)
+	while (++i < g_base.nb_ph)
 	{
 		g_base.philo[i].der = chronos();
 		if (!(g_base.philo[i].pid = fork()))
@@ -112,9 +104,8 @@ int		init_process(void)
 		else if (g_base.philo[i].pid < 0)
 			return (1);
 		usleep(100);
-		i++;
 	}
-	while(g_base.stop == 1)
+	while (g_base.stop == 1)
 		usleep(100);
 	return (0);
 }

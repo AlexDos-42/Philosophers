@@ -75,7 +75,6 @@ int					init_process(void);
 int					start_routine(t_philo *philo);
 void				*is_he_dead(void *args);
 void				*check_philo(void *args);
-int					chronos(void);
 
 /*
 ** --ROUTINE--
@@ -93,6 +92,7 @@ void				sleeping(t_philo *philo);
 void				aff(t_philo *philo, int i);
 char				*text(int i);
 char				*ft_name(char *str, int j);
+int					chronos(void);
 
 /*
 ** --OUTILS--
