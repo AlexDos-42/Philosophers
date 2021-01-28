@@ -1,2 +1,9 @@
 # Philosophers
-42 project
+
+I’ve never thought philosophy would be so deadly.
+
+## Content
+
+In this project, you will learn the basics of threading a process and how to
+work on the same memory space. You will learn how to make threads. You will discover
+the mutex, semaphore and shared memory.
